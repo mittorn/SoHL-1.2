@@ -21,11 +21,11 @@
 DLLNAME=spirit
 
 # used for so name and compile architecture type
-ARCH=i486
+ARCH=i686
 
 # Make sure this is the correct compiler for your system
 # Can only use gcc 2.96+ compilers on newer Linux servers
-CC=gcc
+CC=gcc -m32
 #CC=gcc296
 
 # For older Linux servers or FBSD servers use compat version
@@ -49,7 +49,7 @@ PM_SHARED_OBJDIR=$(PM_SHARED_SRCDIR)/linux_obj
 GAME_SHARED_OBJDIR=$(GAME_SHARED_SRCDIR)/linux_obj
 
 BASE_CFLAGS=	-Dstricmp=strcasecmp -D_strnicmp=strncasecmp -Dstrnicmp=strncasecmp \
-		-DCLIENT_WEAPONS
+		-DCLIENT_WEAPONS -fpermissive
 
 #safe optimization
 #CFLAGS=$(BASE_CFLAGS)  -Wall -Wno-conversion -march=$(ARCH) -O1
