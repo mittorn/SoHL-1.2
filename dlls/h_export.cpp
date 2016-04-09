@@ -46,7 +46,9 @@ BOOL WINAPI DllMain(
     }
 	return TRUE;
 }
-
+#ifdef __MINGW32__
+extern "C"  void DLLEXPORT  GiveFnptrsToDll(	enginefuncs_t* pengfuncsFromEngine, globalvars_t *pGlobals ) __attribute__((__stdcall__)) ;
+#endif
 void DLLEXPORT GiveFnptrsToDll(	enginefuncs_t* pengfuncsFromEngine, globalvars_t *pGlobals )
 {
 	memcpy(&g_engfuncs, pengfuncsFromEngine, sizeof(enginefuncs_t));

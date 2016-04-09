@@ -35,6 +35,7 @@ typedef	int	fixed16_t;
 struct mplane_s;
 
 extern vec3_t vec3_origin;
+#define nanmask nanmask_
 extern	int nanmask;
 
 #define	IS_NAN(x) (((*(int *)&x)&nanmask)==nanmask)
@@ -77,7 +78,7 @@ typedef union DLONG {
 
 extern DLONG	dlong;
 
-#ifdef _WIN32
+#ifdef __MSC_VER
 void __inline set_fpu_cw(void)
 {
 _asm	
