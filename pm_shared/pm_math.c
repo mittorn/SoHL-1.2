@@ -27,7 +27,7 @@
 
 #pragma warning(disable : 4244)
 
-#ifdef CLIENTDLL
+#ifdef CLIENT_DLL
 extern vec3_t vec3_origin;
 #else
 vec3_t vec3_origin = {0, 0, 0};
