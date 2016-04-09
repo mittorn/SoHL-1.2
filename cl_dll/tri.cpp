@@ -18,7 +18,7 @@
 #include "triangleapi.h"
 #include "particlemgr.h"
 
-#define DLLEXPORT __declspec( dllexport )
+#include "exportdef.h"
 
 extern "C"
 {

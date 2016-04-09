@@ -9,8 +9,6 @@
 #include "cl_util.h"
 #include "cl_entity.h"
 #include "triangleapi.h"
-#include "vgui_TeamFortressViewport.h"
-#include "vgui_SpectatorPanel.h"
 #include "hltv.h"
 
 #include "pm_shared.h"
@@ -25,7 +23,7 @@
 #include "event_api.h"
 #include "studio_util.h"
 #include "screenfade.h"
-
+#include "string.h"
 
 #pragma warning(disable: 4244)
 
@@ -85,11 +83,6 @@ void SpectatorSpray(void)
 }
 void SpectatorHelp(void)
 {
-	if ( gViewPort )
-	{
-		gViewPort->ShowVGUIMenu( MENU_SPECHELP );
-	}
-	else
 	{
   		char *text = CHudTextMessage::BufferedLocaliseTextString( "#Spec_Help_Text" );
 			
@@ -112,23 +105,10 @@ void SpectatorMenu( void )
 		gEngfuncs.Con_Printf( "usage:  spec_menu <0|1>\n" );
 		return;
 	}
-	
-	gViewPort->m_pSpectatorPanel->ShowMenu( atoi( gEngfuncs.Cmd_Argv(1))!=0  );
 }
 
 void ToggleScores( void )
 {
-	if ( gViewPort )
-	{
-		if (gViewPort->IsScoreBoardVisible() )
-		{
-			gViewPort->HideScoreBoard();
-		}
-		else
-		{
-			gViewPort->ShowScoreBoard();
-		}
-	}
 }
 
 //-----------------------------------------------------------------------------
@@ -424,7 +404,7 @@ int CHudSpectator::Draw(float flTime)
 		return 1;
 	
 	// make sure we have player info
-	gViewPort->GetAllPlayersInfo();
+	//gViewPort->GetAllPlayersInfo();
 
 
 	// loop through all the players and draw additional infos to their sprites on the map
@@ -578,13 +558,13 @@ void CHudSpectator::DirectorMessage( int iSize, void *pbuf )
 							m_iSpectatorNumber = READ_LONG(); // total number of spectator
 							READ_WORD(); // total number of relay proxies
 
-							gViewPort->UpdateSpectatorPanel();
+//							gViewPort->UpdateSpectatorPanel();
 							break;
 
 		case DRC_CMD_BANNER:
 							// gEngfuncs.Con_DPrintf("GUI: Banner %s\n",READ_STRING() ); // name of banner tga eg gfx/temp/7454562234563475.tga
-							gViewPort->m_pSpectatorPanel->m_TopBanner->LoadImage( READ_STRING() );
-							gViewPort->UpdateSpectatorPanel();
+//							gViewPort->m_pSpectatorPanel->m_TopBanner->LoadImage( READ_STRING() );
+//							gViewPort->UpdateSpectatorPanel();
 							break;
 
 		case DRC_CMD_FADE:		
@@ -628,7 +608,7 @@ void CHudSpectator::FindNextPlayer(bool bReverse)
 	int iDir = bReverse ? -1 : 1; 
 
 	// make sure we have player info
-	gViewPort->GetAllPlayersInfo();
+//	gViewPort->GetAllPlayersInfo();
 
 
 	do
@@ -678,9 +658,6 @@ void CHudSpectator::HandleButtonsDown( int ButtonPressed )
 	int newInsetMode	= m_pip->value;
 
 	// gEngfuncs.Con_Printf(" HandleButtons:%i\n", ButtonPressed );
-	if ( !gViewPort )
-		return;
-
 	//Not in intermission.
 	if ( gHUD.m_iIntermission )
 		 return;
@@ -694,10 +671,6 @@ void CHudSpectator::HandleButtonsDown( int ButtonPressed )
 	// Slow down mouse clicks. 
 	if ( m_flNextObserverInput > time )
 		return;
-
-	// enable spectator screen
-	if ( ButtonPressed & IN_DUCK )
-		gViewPort->m_pSpectatorPanel->ShowMenu(!gViewPort->m_pSpectatorPanel->m_menuVisible);
 
 	//  'Use' changes inset window mode
 	if ( ButtonPressed & IN_USE )
@@ -770,12 +743,6 @@ void CHudSpectator::HandleButtonsDown( int ButtonPressed )
 
 void CHudSpectator::HandleButtonsUp( int ButtonPressed )
 {
-	if ( !gViewPort )
-		return;
-
-	if ( !gViewPort->m_pSpectatorPanel->isVisible() )
-		return; // dont do anything if not in spectator mode
-
 	if ( ButtonPressed & (IN_FORWARD | IN_BACK) )
 		m_zoomDelta = 0.0f;
 	
@@ -876,8 +843,6 @@ void CHudSpectator::SetModes(int iNewMainMode, int iNewInsetMode)
 		sprintf(string, "%c%s", HUD_PRINTCENTER, CHudTextMessage::BufferedLocaliseTextString( string ));
 		gHUD.m_TextMessage.MsgFunc_TextMsg(NULL, strlen(string)+1, string );
 	}
-
-	gViewPort->UpdateSpectatorPanel();
 
 }
 
@@ -1546,7 +1511,6 @@ void CHudSpectator::CheckSettings()
 		m_pip->value = INSET_OFF;
 
 	// draw small border around inset view, adjust upper black bar
-	gViewPort->m_pSpectatorPanel->EnableInsetView( m_pip->value != INSET_OFF );
 }
 
 int CHudSpectator::ToggleInset(bool allowOff)

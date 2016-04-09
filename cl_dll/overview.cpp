@@ -4,12 +4,11 @@
 //
 // $NoKeywords: $
 //=============================================================================
-
+#if 0
 #include "hud.h"
 #include "cl_util.h"
 #include "cl_entity.h"
 #include "triangleapi.h"
-#include "vgui_TeamFortressViewport.h"
 
 // these are included for the math functions
 #include "com_model.h"
@@ -158,3 +157,4 @@ void CHudOverview::InitHUDData()
 //	gEngfuncs.Overview_SetDrawInset( 0 );
 }
 
+#endif

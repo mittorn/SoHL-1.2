@@ -9,8 +9,8 @@
 #define HUD_IFACEH
 #pragma once
 
-#define EXPORT		_declspec( dllexport )
-#define _DLLEXPORT __declspec( dllexport )
+#include "exportdef.h"
+#define _DLLEXPORT DLLEXPORT
 
 typedef int (*pfnUserMsgHook)(const char *pszName, int iSize, void *pbuf);
 #include "wrect.h"

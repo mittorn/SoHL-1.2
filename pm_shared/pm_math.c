@@ -27,7 +27,11 @@
 
 #pragma warning(disable : 4244)
 
-vec3_t vec3_origin = {0,0,0};
+#ifdef CLIENTDLL
+extern vec3_t vec3_origin;
+#else
+vec3_t vec3_origin = {0, 0, 0};
+#endif
 
 int nanmask = 255<<23;
 

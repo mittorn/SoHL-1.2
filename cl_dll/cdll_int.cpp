@@ -21,7 +21,6 @@
 #include "hud.h"
 #include "cl_util.h"
 #include "netadr.h"
-#include "vgui_schememanager.h"
 
 extern "C"
 {
@@ -29,16 +28,21 @@ extern "C"
 }
 
 #include <string.h>
-#include "hud_servers.h"
-#include "vgui_int.h"
 #include "interface.h"
 
-#define DLLEXPORT __declspec( dllexport )
+#include "exportdef.h"
 
 
 cl_enginefunc_t gEngfuncs;
 CHud gHUD;
-TeamFortressViewport *gViewPort = NULL;
+hud_player_info_t		g_PlayerInfoList[MAX_PLAYERS+1];	// player info from the engine
+extra_player_info_t		g_PlayerExtraInfo[MAX_PLAYERS+1];	// additional player info sent directly to the client dll
+team_info_t		g_TeamInfo[MAX_TEAMS+1];
+int g_iUser1;
+int g_iUser2;
+int g_iUser3;
+int g_iTeamNumber;
+int g_iPlayerClass;
 
 void InitInput (void);
 void EV_HookEvents( void );
@@ -168,8 +172,6 @@ int DLLEXPORT HUD_VidInit( void )
 {
 	gHUD.VidInit();
 
-	VGui_Startup();
-
 	return 1;
 }
 
@@ -187,7 +189,6 @@ void DLLEXPORT HUD_Init( void )
 {
 	InitInput();
 	gHUD.Init();
-	Scheme_Init();
 }
 
 
@@ -251,9 +252,6 @@ Called by engine every frame that client .dll is loaded
 
 void DLLEXPORT HUD_Frame( double time )
 {
-	ServersThink( time );
-
-	GetClientVoiceMgr()->Frame(time);
 }
 
 
@@ -267,7 +265,7 @@ Called when a player starts or stops talking.
 
 void DLLEXPORT HUD_VoiceStatus(int entindex, qboolean bTalking)
 {
-	GetClientVoiceMgr()->UpdateSpeakerStatus(entindex, bTalking);
+
 }
 
 /*

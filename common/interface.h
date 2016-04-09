@@ -86,12 +86,8 @@ public:
 	EXPOSE_SINGLE_INTERFACE_GLOBALVAR(className, interfaceName, versionName, __g_##className##_singleton)
 
 
-#ifdef WIN32
-	#define EXPORT_FUNCTION __declspec(dllexport)
-#else
-	#define EXPORT_FUNCTION
-#endif
-
+#include "exportdef.h"
+#define EXPORT_FUNCTION DLLEXPORT
 
 // This function is automatically exported and allows you to access any interfaces exposed with the above macros.
 // if pReturnCode is set, it will return one of the following values

@@ -20,7 +20,7 @@
 #include "pmtrace.h"	
 #include "pm_shared.h"
 
-#define DLLEXPORT __declspec( dllexport )
+#include "exportdef.h"
 
 void Game_AddObjects( void );
 
@@ -538,8 +538,6 @@ void DLLEXPORT HUD_CreateEntities( void )
 
 	// Add in any game specific objects
 	Game_AddObjects();
-
-	GetClientVoiceMgr()->CreateEntities();
 }
 
 /*

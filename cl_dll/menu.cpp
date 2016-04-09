@@ -24,7 +24,6 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "vgui_TeamFortressViewport.h"
 
 #define MAX_MENU_STRING	512
 char g_szMenuString[MAX_MENU_STRING];
@@ -77,9 +76,6 @@ int CHudMenu :: Draw( float flTime )
 	}
 
 	// don't draw the menu if the scoreboard is being shown
-	if ( gViewPort && gViewPort->IsScoreBoardVisible() )
-		return 1;
-
 	// draw the menu, along the left-hand side of the screen
 
 	// count the number of newlines

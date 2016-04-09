@@ -76,7 +76,7 @@ typedef int EOFFSET;
 
 // In case it's not alread defined
 typedef int BOOL;
-
+#include "exportdef.h"
 // In case this ever changes
 #define M_PI			3.14159265358979323846
 
@@ -89,7 +89,7 @@ typedef int BOOL;
 // The function is used to intialize / allocate the object for the entity
 #ifdef _WIN32
 #define LINK_ENTITY_TO_CLASS(mapClassName,DLLClassName) \
-	extern "C" _declspec( dllexport ) void mapClassName( entvars_t *pev ); \
+	extern "C" DLLEXPORT void mapClassName( entvars_t *pev ); \
 	void mapClassName( entvars_t *pev ) { GetClassPtr( (DLLClassName *)pev ); }
 #else
 #define LINK_ENTITY_TO_CLASS(mapClassName,DLLClassName) extern "C" void mapClassName( entvars_t *pev ); void mapClassName( entvars_t *pev ) { GetClassPtr( (DLLClassName *)pev ); }
