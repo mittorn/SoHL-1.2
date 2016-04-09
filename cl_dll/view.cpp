@@ -250,105 +250,6 @@ float V_CalcRoll (vec3_t angles, vec3_t velocity, float rollangle, float rollspe
 	return side * sign;
 }
 
-typedef struct pitchdrift_s
-{
-	float		pitchvel;
-	int			nodrift;
-	float		driftmove;
-	double		laststop;
-} pitchdrift_t;
-
-static pitchdrift_t pd;
-
-void V_StartPitchDrift( void )
-{
-	if ( pd.laststop == gEngfuncs.GetClientTime() )
-	{
-		return;		// something else is keeping it from drifting
-	}
-
-	if ( pd.nodrift || !pd.pitchvel )
-	{
-		pd.pitchvel = v_centerspeed->value;
-		pd.nodrift = 0;
-		pd.driftmove = 0;
-	}
-}
-
-void V_StopPitchDrift ( void )
-{
-	pd.laststop = gEngfuncs.GetClientTime();
-	pd.nodrift = 1;
-	pd.pitchvel = 0;
-}
-
-/*
-===============
-V_DriftPitch
-
-Moves the client pitch angle towards idealpitch sent by the server.
-
-If the user is adjusting pitch manually, either with lookup/lookdown,
-mlook and mouse, or klook and keyboard, pitch drifting is constantly stopped.
-===============
-*/
-void V_DriftPitch ( struct ref_params_s *pparams )
-{
-	float		delta, move;
-
-	if ( gEngfuncs.IsNoClipping() || !pparams->onground || pparams->demoplayback || pparams->spectator )
-	{
-		pd.driftmove = 0;
-		pd.pitchvel = 0;
-		return;
-	}
-
-	// don't count small mouse motion
-	if (pd.nodrift)
-	{
-		if ( fabs( pparams->cmd->forwardmove ) < cl_forwardspeed->value )
-			pd.driftmove = 0;
-		else
-			pd.driftmove += pparams->frametime;
-	
-		if ( pd.driftmove > v_centermove->value)
-		{
-			V_StartPitchDrift ();
-		}
-		return;
-	}
-	
-	delta = pparams->idealpitch - pparams->cl_viewangles[PITCH];
-
-	if (!delta)
-	{
-		pd.pitchvel = 0;
-		return;
-	}
-
-	move = pparams->frametime * pd.pitchvel;
-	pd.pitchvel += pparams->frametime * v_centerspeed->value;
-	
-	if (delta > 0)
-	{
-		if (move > delta)
-		{
-			pd.pitchvel = 0;
-			move = delta;
-		}
-		pparams->cl_viewangles[PITCH] += move;
-	}
-	else if (delta < 0)
-	{
-		if (move > -delta)
-		{
-			pd.pitchvel = 0;
-			move = -delta;
-		}
-		pparams->cl_viewangles[PITCH] -= move;
-	}
-}
-
 /* 
 ============================================================================== 
 						VIEW RENDERING 
@@ -521,7 +422,7 @@ void V_CalcNormalRefdef ( struct ref_params_s *pparams )
 		return;
 	}
 
-	V_DriftPitch ( pparams );
+	//V_DriftPitch ( pparams );
 
 	if ( gEngfuncs.IsSpectateOnly() )
 	{
@@ -1712,7 +1613,7 @@ V_Init
 */
 void V_Init (void)
 {
-	gEngfuncs.pfnAddCommand ("centerview", V_StartPitchDrift );
+	//gEngfuncs.pfnAddCommand ("centerview", V_StartPitchDrift );
 
 	scr_ofsx			= gEngfuncs.pfnRegisterVariable( "scr_ofsx","0", 0 );
 	scr_ofsy			= gEngfuncs.pfnRegisterVariable( "scr_ofsy","0", 0 );
