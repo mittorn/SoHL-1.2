@@ -33,11 +33,14 @@ static void PlatSpawnInsideTrigger(entvars_t* pevPlatform);
 // BUG BUG This is declared in pm_math.cpp, Linux will spit about it
 // No idea why windows does not pick that up, in fact
 // MSVC will complain it's not delcared if you use extern...
+#if 0
 #ifdef _WIN32
 int nanmask = 255<<23;
 #else
 extern int nanmask;
 #endif
+#endif
+#define nanmask (int)(255<<23)
 
 #define	IS_NAN(x) (((*(int *)&x)&nanmask)==nanmask)
 

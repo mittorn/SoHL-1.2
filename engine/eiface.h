@@ -32,13 +32,14 @@
 //		include progdefs.h
 // This is conveniently done for them in extdll.h
 //
-
+/*
+#undef DLLEXPORT
 #ifdef _WIN32
 #define DLLEXPORT __stdcall
 #else
-#define DLLEXPORT /* */
+#define DLLEXPORT
 #endif
-
+*/
 typedef enum
 	{
 	at_notice,
@@ -493,4 +494,4 @@ extern NEW_DLL_FUNCTIONS	gNewDLLFunctions;
 typedef int	(*APIFUNCTION)( DLL_FUNCTIONS *pFunctionTable, int interfaceVersion );
 typedef int	(*APIFUNCTION2)( DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion );
 
-#endif EIFACE_H
+#endif // EIFACE_H

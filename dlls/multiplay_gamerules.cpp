@@ -27,7 +27,7 @@
 #include	"skill.h"
 #include	"game.h"
 #include	"items.h"
-#include	"voice_gamemgr.h"
+
 #include	"hltv.h"
 
 extern DLL_GLOBAL CGameRules	*g_pGameRules;
@@ -45,9 +45,7 @@ extern int g_teamplay;
 
 float g_flIntermissionStartTime = 0;
 
-//CVoiceGameMgr	g_VoiceGameMgr;
-
-class CMultiplayGameMgrHelper : public IVoiceGameMgrHelper
+/*class CMultiplayGameMgrHelper : public IVoiceGameMgrHelper
 {
 public:
 	virtual bool		CanPlayerHearPlayer(CBasePlayer *pListener, CBasePlayer *pTalker)
@@ -63,7 +61,7 @@ public:
 		return true;
 	}
 };
-static CMultiplayGameMgrHelper g_GameMgrHelper;
+static CMultiplayGameMgrHelper g_GameMgrHelper;*/
 
 //*********************************************************
 // Rules for the half-life multiplayer game.
@@ -71,7 +69,8 @@ static CMultiplayGameMgrHelper g_GameMgrHelper;
 
 CHalfLifeMultiplay :: CHalfLifeMultiplay()
 {
-	//g_VoiceGameMgr.Init(&g_GameMgrHelper, gpGlobals->maxClients);
+//	g_VoiceGameMgr.Init(&g_GameMgrHelper, gpGlobals->maxClients);
+
 
 	RefreshSkillData();
 	m_flIntermissionEndTime = 0;
@@ -118,8 +117,9 @@ CHalfLifeMultiplay :: CHalfLifeMultiplay()
 
 BOOL CHalfLifeMultiplay::ClientCommand( CBasePlayer *pPlayer, const char *pcmd )
 {
-	//if(g_VoiceGameMgr.ClientCommand(pPlayer, pcmd))
-		//return TRUE;
+//	if(g_VoiceGameMgr.ClientCommand(pPlayer, pcmd))
+//		return TRUE;
+
 
 	return CGameRules::ClientCommand(pPlayer, pcmd);
 }
@@ -188,7 +188,8 @@ extern cvar_t mp_chattime;
 //=========================================================
 void CHalfLifeMultiplay :: Think ( void )
 {
-	//g_VoiceGameMgr.Update(gpGlobals->frametime);
+//	g_VoiceGameMgr.Update(gpGlobals->frametime);
+
 
 	///// Check game rules /////
 	static int last_frags;
@@ -399,7 +400,8 @@ BOOL CHalfLifeMultiplay :: GetNextBestWeapon( CBasePlayer *pPlayer, CBasePlayerI
 //=========================================================
 BOOL CHalfLifeMultiplay :: ClientConnected( edict_t *pEntity, const char *pszName, const char *pszAddress, char szRejectReason[ 128 ] )
 {
-	//g_VoiceGameMgr.ClientConnected(pEntity);
+//	g_VoiceGameMgr.ClientConnected(pEntity);
+
 	return TRUE;
 }
 
