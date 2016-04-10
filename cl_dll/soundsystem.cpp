@@ -15,9 +15,11 @@
 //
 // $NoKeywords: $
 //=============================================================================
+#define HSPRITE WINAPI_HSPRITE
 #include <windows.h>
 #include <dsound.h>
 #include <mmsystem.h>
+#undef HSPRITE
 #include "r_studioint.h"
 
 extern engine_studio_api_t IEngineStudio;
