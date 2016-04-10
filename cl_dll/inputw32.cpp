@@ -19,8 +19,9 @@
 #include "in_defs.h"
 #include "../engine/keydefs.h"
 #include "view.h"
+#define HSPRITE WINAPI_HSPRITE
 #include "windows.h"
-
+#undef HSPRITE
 #define MOUSE_BUTTON_COUNT 5
 
 // Set this to 1 to show mouse cursor.  Experimental

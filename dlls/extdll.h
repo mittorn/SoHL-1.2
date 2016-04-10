@@ -39,7 +39,9 @@
 #define NOSERVICE
 #define NOMCX
 #define NOIME
+#define HSPRITE WINAPI_HSPRITE
 #include "windows.h"
+#undef HSPRITE
 #else // _WIN32
 #define FALSE 0
 #define TRUE (!FALSE)
