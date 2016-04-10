@@ -84,7 +84,7 @@ typedef struct physent_s
 	vec3_t			vuser4;
 } physent_t;
 
-
+struct hull_s;
 typedef struct playermove_s
 {
 	int				player_index;  // So we don't try to run the PM_CheckStuck nudging too quickly.
