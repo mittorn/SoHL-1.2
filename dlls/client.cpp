@@ -314,11 +314,11 @@ void Host_Say( edict_t *pEntity, int teamonly )
 			continue;
 
 		// can the receiver hear the sender? or has he muted him?
-		if ( g_VoiceGameMgr.PlayerHasBlockedPlayer( client, player ) )
-			continue;
+		//if ( g_VoiceGameMgr.PlayerHasBlockedPlayer( client, player ) )
+			//continue;
 
-		if ( teamonly && g_pGameRules->PlayerRelationship(client, CBaseEntity::Instance(pEntity)) != GR_TEAMMATE )
-			continue;
+		//if ( teamonly && g_pGameRules->PlayerRelationship(client, CBaseEntity::Instance(pEntity)) != GR_TEAMMATE )
+			//continue;
 
 		MESSAGE_BEGIN( MSG_ONE, gmsgSayText, NULL, client->pev );
 			WRITE_BYTE( ENTINDEX(pEntity) );

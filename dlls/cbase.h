@@ -468,6 +468,10 @@ public:
 
 	enum EGON_FIRESTATE { FIRE_OFF, FIRE_CHARGE };
 	int m_fireState;
+        virtual float TouchGravGun( CBaseEntity *ent, int state )
+        {
+                return 0;
+        }
 };
 
 //LRC- moved here from player.cpp. I'd put it in util.h with its friends, but it needs CBaseEntity to be declared.

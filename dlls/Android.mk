@@ -39,8 +39,7 @@ LOCAL_SRC_FILES := aflock.cpp agrunt.cpp AI_BaseNPC_Schedule.cpp airtank.cpp \
 		tentacle.cpp triggers.cpp tripmine.cpp turret.cpp util.cpp weapons.cpp world.cpp xen.cpp \
 		zombie.cpp wpn_shared/hl_wpn_glock.cpp \
 	   ../pm_shared/pm_debug.c ../pm_shared/pm_math.c ../pm_shared/pm_shared.c \
-	   ../game_shared/voice_gamemgr.cpp
-
+	   prop.cpp gravgun.cpp
 
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a-hard)
 LOCAL_MODULE_FILENAME = libserver_hardfp

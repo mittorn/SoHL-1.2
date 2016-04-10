@@ -80,7 +80,7 @@ void CHalfLifeTeamplay :: Think ( void )
 	int frags_remaining = 0;
 	int time_remaining = 0;
 
-	g_VoiceGameMgr.Update(gpGlobals->frametime);
+	//g_VoiceGameMgr.Update(gpGlobals->frametime);
 
 	if ( g_fGameOver )   // someone else quit the game already
 	{
@@ -145,8 +145,8 @@ void CHalfLifeTeamplay :: Think ( void )
 //=========================================================
 BOOL CHalfLifeTeamplay :: ClientCommand( CBasePlayer *pPlayer, const char *pcmd )
 {
-	if(g_VoiceGameMgr.ClientCommand(pPlayer, pcmd))
-		return TRUE;
+	//if(g_VoiceGameMgr.ClientCommand(pPlayer, pcmd))
+		//return TRUE;
 
 	if ( FStrEq( pcmd, "menuselect" ) )
 	{
