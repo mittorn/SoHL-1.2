@@ -10,7 +10,6 @@
 #pragma once
 
 #include "exportdef.h"
-#define _DLLEXPORT DLLEXPORT
 
 typedef int (*pfnUserMsgHook)(const char *pszName, int iSize, void *pbuf);
 #include "wrect.h"
