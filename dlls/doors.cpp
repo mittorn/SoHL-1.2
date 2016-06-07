@@ -965,8 +965,8 @@ void CBaseDoor::Blocked( CBaseEntity *pOther )
 			if ( !pTarget )
 				break;
 
-			if ( VARS( pTarget->pev ) != pev && FClassnameIs ( pTarget->pev, "func_door" ) ||
-						FClassnameIs ( pTarget->pev, "func_door_rotating" ) )
+			if ( ( VARS( pTarget->pev ) != pev && FClassnameIs( pTarget->pev, "func_door" ) ) ||
+						FClassnameIs( pTarget->pev, "func_door_rotating" ) )
 			{
 				pDoor = GetClassPtr( (CBaseDoor *) VARS(pTarget->pev) );
 				if ( pDoor->m_flWait >= 0)

@@ -338,7 +338,7 @@ void CBreakable::MaterialSoundRandom( edict_t *pEdict, Materials soundMaterial, 
 
 void CBreakable::Precache( void )
 {
-	const char *pGibName;
+	const char *pGibName = NULL;
 
     switch (m_Material) 
 	{
@@ -415,7 +415,7 @@ void CBreakable::DamageSound( void )
 	int pitch;
 	float fvol;
 	char *rgpsz[6];
-	int i;
+	int i = 0;
 	int material = m_Material;
 
 //	if (RANDOM_LONG(0,1))
@@ -740,7 +740,7 @@ void CBreakable::Die( void )
 	// The more negative pev->health, the louder
 	// the sound should be.
 
-	fvol = RANDOM_FLOAT(0.85, 1.0) + (abs(pev->health) / 100.0);
+	fvol = RANDOM_FLOAT( 0.85, 1.0 ) + ( fabs( pev->health ) / 100.0 );
 
 	if (fvol > 1.0)
 		fvol = 1.0;
