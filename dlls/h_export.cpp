@@ -29,7 +29,6 @@
 enginefuncs_t g_engfuncs;
 globalvars_t  *gpGlobals;
 
-
 #ifdef _WIN32
 
 // Required DLL entry point
@@ -46,26 +45,18 @@ BOOL WINAPI DllMain(
     }
 	return TRUE;
 }
-#ifdef __MINGW32__
-extern "C"  void DLLEXPORT  GiveFnptrsToDll(	enginefuncs_t* pengfuncsFromEngine, globalvars_t *pGlobals ) __attribute__((__stdcall__)) ;
-#endif
-void DLLEXPORT GiveFnptrsToDll(	enginefuncs_t* pengfuncsFromEngine, globalvars_t *pGlobals )
-{
-	memcpy(&g_engfuncs, pengfuncsFromEngine, sizeof(enginefuncs_t));
-	gpGlobals = pGlobals;
-}
 
-
+// stdcall for win32
+#define EXPORT2 WINAPI
 #else
+#define EXPORT2
+#endif
 
-extern "C" {
+extern "C" void DLLEXPORT EXPORT2 GiveFnptrsToDll( enginefuncs_t* pengfuncsFromEngine, globalvars_t *pGlobals );
 
-void GiveFnptrsToDll(	enginefuncs_t* pengfuncsFromEngine, globalvars_t *pGlobals )
+void DLLEXPORT EXPORT2 GiveFnptrsToDll(	enginefuncs_t* pengfuncsFromEngine, globalvars_t *pGlobals )
 {
 	memcpy(&g_engfuncs, pengfuncsFromEngine, sizeof(enginefuncs_t));
 	gpGlobals = pGlobals;
 }
 
-}
-
-#endif
