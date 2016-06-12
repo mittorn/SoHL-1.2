@@ -912,7 +912,7 @@ Schedule_t *CHAssassin :: GetSchedule ( void )
 
 	case MONSTERSTATE_COMBAT:
 		{
-// dead enemy
+			// dead enemy
 			if ( HasConditions( bits_COND_ENEMY_DEAD ) )
 			{
 				// call base class, all code to handle dead enemies is centralized there.
@@ -961,21 +961,21 @@ Schedule_t *CHAssassin :: GetSchedule ( void )
 				m_iFrustration++;
 			}
 
-		// jump player!
+			// jump player!
 			if ( HasConditions ( bits_COND_CAN_MELEE_ATTACK1 ) )
 			{
 				// ALERT( at_console, "melee attack 1\n");
 				return GetScheduleOfType ( SCHED_MELEE_ATTACK1 );
 			}
 
-		// throw grenade
+			// throw grenade
 			if ( HasConditions ( bits_COND_CAN_RANGE_ATTACK2 ) )
 			{
 				// ALERT( at_console, "range attack 2\n");
 				return GetScheduleOfType ( SCHED_RANGE_ATTACK2 );
 			}
 
-		// spotted
+			// spotted
 			if ( HasConditions ( bits_COND_SEE_ENEMY ) && HasConditions ( bits_COND_ENEMY_FACING_ME ) )
 			{
 				// ALERT( at_console, "exposed\n");
@@ -983,7 +983,7 @@ Schedule_t *CHAssassin :: GetSchedule ( void )
 				return GetScheduleOfType ( SCHED_ASSASSIN_EXPOSED );
 			}
 
-		// can attack
+			// can attack
 			if ( HasConditions ( bits_COND_CAN_RANGE_ATTACK1 ) )
 			{
 				// ALERT( at_console, "range attack 1\n");
@@ -997,7 +997,7 @@ Schedule_t *CHAssassin :: GetSchedule ( void )
 				return GetScheduleOfType ( SCHED_COMBAT_FACE );
 			}
 
-		// new enemy
+			// new enemy
 			if ( HasConditions ( bits_COND_NEW_ENEMY ) )
 			{
 				// ALERT( at_console, "take cover\n");
@@ -1007,6 +1007,8 @@ Schedule_t *CHAssassin :: GetSchedule ( void )
 			// ALERT( at_console, "stand\n");
 			return GetScheduleOfType ( SCHED_ALERT_STAND );
 		}
+		break;
+	default:
 		break;
 	}
 

@@ -2094,14 +2094,14 @@ Schedule_t *CHGrunt :: GetSchedule( void )
 	{
 	case MONSTERSTATE_COMBAT:
 		{
-// dead enemy
+			// dead enemy
 			if ( HasConditions( bits_COND_ENEMY_DEAD ) )
 			{
 				// call base class, all code to handle dead enemies is centralized there.
 				return CBaseMonster :: GetSchedule();
 			}
 
-// new enemy
+			// new enemy
 			if ( HasConditions(bits_COND_NEW_ENEMY) )
 			{
 				if ( InSquad() )
@@ -2149,7 +2149,7 @@ Schedule_t *CHGrunt :: GetSchedule( void )
 					}
 				}
 			}
-// no ammo
+			// no ammo
 			else if ( HasConditions ( bits_COND_NO_AMMO_LOADED ) )
 			{
 				//!!!KELLY - this individual just realized he's out of bullet ammo. 
@@ -2158,7 +2158,7 @@ Schedule_t *CHGrunt :: GetSchedule( void )
 				return GetScheduleOfType ( SCHED_GRUNT_COVER_AND_RELOAD );
 			}
 			
-// damaged just a little
+			// damaged just a little
 			else if ( HasConditions( bits_COND_LIGHT_DAMAGE ) )
 			{
 				// if hurt:
@@ -2184,19 +2184,19 @@ Schedule_t *CHGrunt :: GetSchedule( void )
 					return GetScheduleOfType( SCHED_SMALL_FLINCH );
 				}
 			}
-// can kick
+			// can kick
 			else if ( HasConditions ( bits_COND_CAN_MELEE_ATTACK1 ) )
 			{
 				return GetScheduleOfType ( SCHED_MELEE_ATTACK1 );
 			}
-// can grenade launch
+			// can grenade launch
 
 			else if ( FBitSet( pev->weapons, HGRUNT_GRENADELAUNCHER) && HasConditions ( bits_COND_CAN_RANGE_ATTACK2 ) && OccupySlot( bits_SLOTS_HGRUNT_GRENADE ) )
 			{
 				// shoot a grenade if you can
 				return GetScheduleOfType( SCHED_RANGE_ATTACK2 );
 			}
-// can shoot
+			// can shoot
 			else if ( HasConditions ( bits_COND_CAN_RANGE_ATTACK1 ) )
 			{
 				if ( InSquad() )
@@ -2227,7 +2227,7 @@ Schedule_t *CHGrunt :: GetSchedule( void )
 					return GetScheduleOfType( SCHED_TAKE_COVER_FROM_ENEMY );
 				}
 			}
-// can't see enemy
+			// can't see enemy
 			else if ( HasConditions( bits_COND_ENEMY_OCCLUDED ) )
 			{
 				if ( HasConditions( bits_COND_CAN_RANGE_ATTACK2 ) && OccupySlot( bits_SLOTS_HGRUNT_GRENADE ) )
@@ -2272,6 +2272,9 @@ Schedule_t *CHGrunt :: GetSchedule( void )
 				return GetScheduleOfType ( SCHED_GRUNT_ESTABLISH_LINE_OF_FIRE );
 			}
 		}
+		break;
+	default:
+		break;
 	}
 	
 	// no special cases here, call the base class

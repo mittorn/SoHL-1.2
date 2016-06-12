@@ -2535,6 +2535,8 @@ int CSave :: WriteFields( const char *cname, const char *pname, void *pBaseData,
 					case FIELD_EHANDLE:
 						entityArray[j] = EntityIndex( (CBaseEntity *)(((EHANDLE *)pOutputData)[j]) );
 					break;
+					default:
+					break;
 				}
 			}
 			WriteInt( pTest->fieldName, entityArray, pTest->fieldSize );

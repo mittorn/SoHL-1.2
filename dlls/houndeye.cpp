@@ -219,14 +219,12 @@ void CHoundeye :: SetYawSpeed ( void )
 		ys = 60;
 		break;
 	case ACT_WALK:
-		ys = 90;
-		break;
 	case ACT_RUN:	
-		ys = 90;
-		break;
 	case ACT_TURN_LEFT:
 	case ACT_TURN_RIGHT:
 		ys = 90;
+		break;
+	default:
 		break;
 	}
 
@@ -1268,44 +1266,40 @@ Schedule_t *CHoundeye :: GetSchedule( void )
 	switch	( m_MonsterState )
 	{
 	case MONSTERSTATE_COMBAT:
+	
+		// dead enemy
+		if ( HasConditions( bits_COND_ENEMY_DEAD ) )
 		{
-// dead enemy
-			if ( HasConditions( bits_COND_ENEMY_DEAD ) )
-			{
-				// call base class, all code to handle dead enemies is centralized there.
-				return CBaseMonster :: GetSchedule();
-			}
-
-			if ( HasConditions( bits_COND_LIGHT_DAMAGE | bits_COND_HEAVY_DAMAGE ) )
-			{
-				if ( RANDOM_FLOAT( 0 , 1 ) <= 0.4 )
-				{
-					TraceResult tr;
-					UTIL_MakeVectors( pev->angles );
-					UTIL_TraceHull( pev->origin, pev->origin + gpGlobals->v_forward * -128, dont_ignore_monsters, head_hull, ENT( pev ), &tr );
-
-					if ( tr.flFraction == 1.0 )
-					{
-						// it's clear behind, so the hound will jump
-						return GetScheduleOfType ( SCHED_HOUND_HOP_RETREAT );
-					}
-				}
-
-				return GetScheduleOfType ( SCHED_TAKE_COVER_FROM_ENEMY );
-			}
-
-			if ( HasConditions( bits_COND_CAN_RANGE_ATTACK1 ) )
-			{
-				if ( OccupySlot ( bits_SLOTS_HOUND_ATTACK ) )
-				{
-					return GetScheduleOfType ( SCHED_RANGE_ATTACK1 );
-				}
-
-				return GetScheduleOfType ( SCHED_HOUND_AGITATED );
-			}
-			break;
+			// call base class, all code to handle dead enemies is centralized there.
+			return CBaseMonster :: GetSchedule();
 		}
-	}
+		if ( HasConditions( bits_COND_LIGHT_DAMAGE | bits_COND_HEAVY_DAMAGE ) )
+		{
+			if ( RANDOM_FLOAT( 0 , 1 ) <= 0.4 )
+			{
+				TraceResult tr;
+				UTIL_MakeVectors( pev->angles );
+				UTIL_TraceHull( pev->origin, pev->origin + gpGlobals->v_forward * -128, dont_ignore_monsters, head_hull, ENT( pev ), &tr );
 
+				if ( tr.flFraction == 1.0 )
+				{
+					// it's clear behind, so the hound will jump
+					return GetScheduleOfType ( SCHED_HOUND_HOP_RETREAT );
+				}
+			}
+			return GetScheduleOfType ( SCHED_TAKE_COVER_FROM_ENEMY );
+		}
+		if ( HasConditions( bits_COND_CAN_RANGE_ATTACK1 ) )
+		{
+			if ( OccupySlot ( bits_SLOTS_HOUND_ATTACK ) )
+			{
+				return GetScheduleOfType ( SCHED_RANGE_ATTACK1 );
+			}
+			return GetScheduleOfType ( SCHED_HOUND_AGITATED );
+		}
+		break;
+	default:
+		break;
+	}
 	return CSquadMonster :: GetSchedule();
 }
