@@ -637,6 +637,7 @@ void CBreakable::TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vec
 		switch( m_Material )
 		{
 			case matComputer:
+			{	
 				UTIL_Sparks( ptr->vecEndPos );
 
 				float flVolume = RANDOM_FLOAT ( 0.7 , 1.0 );//random volume range
@@ -645,6 +646,7 @@ void CBreakable::TraceAttack( entvars_t *pevAttacker, float flDamage, Vector vec
 					case 0: EMIT_SOUND(ENT(pev), CHAN_VOICE, "buttons/spark5.wav", flVolume, ATTN_NORM);	break;
 					case 1: EMIT_SOUND(ENT(pev), CHAN_VOICE, "buttons/spark6.wav", flVolume, ATTN_NORM);	break;
 				}
+			}
 				break;
 			case matUnbreakableGlass:
 				UTIL_Ricochet( ptr->vecEndPos, RANDOM_FLOAT(0.5,1.5) );
