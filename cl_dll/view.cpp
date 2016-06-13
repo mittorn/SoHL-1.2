@@ -1612,8 +1612,6 @@ V_Init
 */
 void V_Init (void)
 {
-	//gEngfuncs.pfnAddCommand ("centerview", V_StartPitchDrift );
-
 	scr_ofsx			= gEngfuncs.pfnRegisterVariable( "scr_ofsx","0", 0 );
 	scr_ofsy			= gEngfuncs.pfnRegisterVariable( "scr_ofsy","0", 0 );
 	scr_ofsz			= gEngfuncs.pfnRegisterVariable( "scr_ofsz","0", 0 );
