@@ -725,12 +725,17 @@ void CTentacle::CommandUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_T
 			CSoundEnt::InsertSound ( bits_SOUND_WORLD, pActivator->pev->origin, 1024, 1.0 );
 		}
 		break;
-	case USE_SET:
-		break;
 	case USE_TOGGLE:
 		pev->takedamage = DAMAGE_NO;
 		SetThink(&CTentacle:: DieThink );
 		m_iGoalAnim = TENTACLE_ANIM_Engine_Idle;
+		break;
+	case USE_SET:
+	case USE_KILL:
+	case USE_SAME:
+	case USE_NOT:
+		break;
+	default:
 		break;
 	}
 

@@ -604,18 +604,18 @@ void CScientist :: SetYawSpeed ( void )
 
 	switch ( m_Activity )
 	{
-	case ACT_IDLE:
-		ys = 120;
-		break;
 	case ACT_WALK:
 		ys = 180;
 		break;
 	case ACT_RUN:
 		ys = 150;
 		break;
+	case ACT_IDLE:
 	case ACT_TURN_LEFT:
 	case ACT_TURN_RIGHT:
 		ys = 120;
+		break;
+	default:
 		break;
 	}
 
@@ -1016,6 +1016,8 @@ Schedule_t *CScientist :: GetSchedule ( void )
 
 		return slScientistCover;			// Run & Cower
 		break;
+	default:
+		break;
 	}
 	
 	return CTalkMonster::GetSchedule();
@@ -1032,7 +1034,7 @@ MONSTERSTATE CScientist :: GetIdealState ( void )
 			if ( IsFollowing() )
 			{
 				int relationship = IRelationship( m_hEnemy );
-				if ( relationship != R_FR || relationship != R_HT && !HasConditions( bits_COND_LIGHT_DAMAGE | bits_COND_HEAVY_DAMAGE ) )
+				if ( relationship != R_FR || ( relationship != R_HT && !HasConditions( bits_COND_LIGHT_DAMAGE | bits_COND_HEAVY_DAMAGE ) ) )
 				{
 					// Don't go to combat if you're following the player
 					m_IdealMonsterState = MONSTERSTATE_ALERT;
@@ -1048,7 +1050,6 @@ MONSTERSTATE CScientist :: GetIdealState ( void )
 				StopFollowing( TRUE );
 		}
 		break;
-
 	case MONSTERSTATE_COMBAT:
 		{
 			CBaseEntity *pEnemy = m_hEnemy;
@@ -1078,8 +1079,9 @@ MONSTERSTATE CScientist :: GetIdealState ( void )
 			}
 		}
 		break;
+	default:
+		break;
 	}
-
 	return CTalkMonster::GetIdealState();
 }
 

@@ -242,6 +242,10 @@ void CLight :: SetCorrectStyle ( void )
 			else
 				SetStyle(MAKE_STRING("m"));
 			break;
+		case STATE_IN_USE:
+			break;
+		default:
+			break;
 		}
 	}
 	else
@@ -261,6 +265,12 @@ void CLight :: Think( void )
 	case STATE_TURN_OFF:
 		m_iState = STATE_OFF;
 		FireTargets(STRING(pev->target),this,this,USE_OFF,0);
+		break;
+	case STATE_OFF:
+	case STATE_ON:
+	case STATE_IN_USE:
+		break;
+	default:
 		break;
 	}
 	SetCorrectStyle();
@@ -317,6 +327,10 @@ void CLight :: Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useT
 			}
 			else
 				m_iState = STATE_ON;
+			break;
+		STATE_IN_USE:
+			break;
+		default:
 			break;
 		}
 		SetCorrectStyle();

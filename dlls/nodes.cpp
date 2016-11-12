@@ -43,7 +43,7 @@ CGraph	WorldGraph;
 
 LINK_ENTITY_TO_CLASS( info_node, CNodeEnt );
 LINK_ENTITY_TO_CLASS( info_node_air, CNodeEnt );
-#ifdef __linux__
+#ifdef _LINUX
 #include <unistd.h>
 #define CreateDirectory(p, n) mkdir(p, 0777)
 #endif
@@ -517,13 +517,13 @@ int CGraph::NextNodeInRoute( int iCurrentNode, int iDest, int iHull, int iCap )
 {
 	int iNext = iCurrentNode;
 	int nCount = iDest+1;
-	unsigned char *pRoute = m_pRouteInfo + m_pNodes[ iCurrentNode ].m_pNextBestNode[iHull][iCap];
+	signed char *pRoute = m_pRouteInfo + m_pNodes[ iCurrentNode ].m_pNextBestNode[iHull][iCap];
 
 	// Until we decode the next best node
 	//
 	while (nCount > 0)
 	{
-		unsigned char ch = *pRoute++;
+		signed char ch = *pRoute++;
 		//ALERT(at_aiconsole, "C(%d)", ch);
 		if (ch < 0)
 		{
@@ -891,7 +891,7 @@ int	CGraph :: FindNearestNode ( const Vector &vecOrigin,  int afNodeTypes )
 	m_CheckedCounter++;
 	if (m_CheckedCounter == 0)
 	{
-		for (int i = 0; i < m_cNodes; i++)
+		for( i = 0; i < m_cNodes; i++ )
 		{
 			m_di[i].m_CheckedEvent = 0;
 		}
@@ -1277,7 +1277,7 @@ int CGraph :: LinkVisibleNodes ( CLink *pLinkPool, FILE *file, int *piBadNode )
 					fprintf ( file, "  Entity on connection: %s, name: %s  Model: %s", STRING( VARS( pTraceEnt )->classname ), STRING ( VARS( pTraceEnt )->targetname ), STRING ( VARS(tr.pHit)->model ) );
 				}
 				
-				fprintf ( file, "\n", j );
+				fprintf ( file, "\n" );
 			}
 
 			pLinkPool [ cTotalLinks ].m_iDestNode = j;
@@ -1596,7 +1596,7 @@ void CTestHull::CallBuildNodeGraph( void )
 //=========================================================
 void CTestHull :: BuildNodeGraph( void )
 {
-	TraceResult	tr;
+	//TraceResult	tr;
 	FILE	*file;
 
 	char	szNrpFilename [MAX_PATH];// text node report filename
@@ -2423,7 +2423,7 @@ int CGraph :: FLoadGraph ( char *szMapName )
 		// Malloc for the routing info.
 		//
 		m_fRoutingComplete = FALSE;
-		m_pRouteInfo = (unsigned char *)calloc( sizeof(unsigned char), m_nRouteInfo );
+		m_pRouteInfo = (signed char *)calloc( sizeof(signed char), m_nRouteInfo );
 		if ( !m_pRouteInfo )
 		{
 			ALERT ( at_aiconsole, "***ERROR**\nCounldn't malloc %d route bytes!\n", m_nRouteInfo );
@@ -2537,7 +2537,7 @@ int CGraph :: FSaveGraph ( char *szMapName )
 		//
 		if ( m_pRouteInfo && m_nRouteInfo )
 		{
-			fwrite ( m_pRouteInfo, sizeof( unsigned char ), m_nRouteInfo, file );
+			fwrite ( m_pRouteInfo, sizeof( signed char ), m_nRouteInfo, file );
 		}
 
 		if (m_pHashLinks && m_nHashLinks)
@@ -3043,7 +3043,7 @@ void CGraph :: ComputeStaticRoutingTables( void )
 
 	int *pMyPath = new int[m_cNodes];
 	unsigned short *BestNextNodes = new unsigned short[m_cNodes];
-	unsigned char *pRoute = new unsigned char[m_cNodes*2];
+	signed char *pRoute = new signed char[m_cNodes*2];
 
 
 	if (Routes && pMyPath && BestNextNodes && pRoute)
@@ -3138,7 +3138,7 @@ void CGraph :: ComputeStaticRoutingTables( void )
 					int cSequence = 0;
 					int cRepeats = 0;
 					int CompressedSize = 0;
-					unsigned char *p = pRoute;
+					signed char *p = pRoute;
 					for (int i = 0; i < m_cNodes; i++)
 					{
 						BOOL CanRepeat = ((BestNextNodes[i] == iLastNode) && cRepeats < 127);
@@ -3299,7 +3299,7 @@ void CGraph :: ComputeStaticRoutingTables( void )
 						}
 						else
 						{
-							unsigned char *Tmp = (unsigned char *)calloc(sizeof(unsigned char), (m_nRouteInfo + nRoute));
+							signed char *Tmp = (signed char *)calloc(sizeof(signed char), (m_nRouteInfo + nRoute));
 							memcpy(Tmp, m_pRouteInfo, m_nRouteInfo);
 							free(m_pRouteInfo);
 							m_pRouteInfo = Tmp;
@@ -3312,7 +3312,7 @@ void CGraph :: ComputeStaticRoutingTables( void )
 					else
 					{
 						m_nRouteInfo = nRoute;
-						m_pRouteInfo = (unsigned char *)calloc(sizeof(unsigned char), nRoute);
+						m_pRouteInfo = (signed char *)calloc(sizeof(signed char), nRoute);
 						memcpy(m_pRouteInfo, pRoute, nRoute);
 						m_pNodes[ iFrom ].m_pNextBestNode[iHull][iCap] = 0;
 						nTotalCompressedSize += CompressedSize;
@@ -3322,10 +3322,10 @@ void CGraph :: ComputeStaticRoutingTables( void )
 		}		
 		ALERT( at_aiconsole, "Size of Routes = %d\n", nTotalCompressedSize);
 	}
-	if (Routes) delete Routes;
-	if (BestNextNodes) delete BestNextNodes;
-	if (pRoute) delete pRoute;
-	if (pMyPath) delete pMyPath;
+	if (Routes) delete[] Routes;
+	if (BestNextNodes) delete[] BestNextNodes;
+	if (pRoute) delete[] pRoute;
+	if (pMyPath) delete[] pMyPath;
 	Routes = 0;
 	BestNextNodes = 0;
 	pRoute = 0;
@@ -3378,7 +3378,7 @@ void CGraph :: TestRoutingTables( void )
 						//
 #if 1
 						float flDistance1 = 0.0;
-						int i = 0;
+						int i;
 						for (i = 0; i < cPathSize1-1; i++)
 						{
 							// Find the link from pMyPath[i] to pMyPath[i+1]
@@ -3433,7 +3433,7 @@ void CGraph :: TestRoutingTables( void )
 #endif
 							ALERT(at_aiconsole, "Routing is inconsistent!!!\n");
 							ALERT(at_aiconsole, "(%d to %d |%d/%d)1:", iFrom, iTo, iHull, iCap);
-							int i = 0;
+							//int i = 0;
 							for (i = 0; i < cPathSize1; i++)
 							{
 								ALERT(at_aiconsole, "%d ", pMyPath[i]);
@@ -3458,8 +3458,8 @@ void CGraph :: TestRoutingTables( void )
 
 EnoughSaid:
 
-	if (pMyPath) delete pMyPath;
-	if (pMyPath2) delete pMyPath2;
+	if (pMyPath) delete[] pMyPath;
+	if (pMyPath2) delete[] pMyPath2;
 	pMyPath = 0;
 	pMyPath2 = 0;
 }

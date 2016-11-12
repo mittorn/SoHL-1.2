@@ -1217,8 +1217,12 @@ void CNihilanth::CommandUse( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_
 		}
 		break;
 	case USE_SET:
-		break;
 	case USE_TOGGLE:
+	case USE_KILL:
+	case USE_SAME:
+	case USE_NOT:
+		break;
+	default:
 		break;
 	}
 }

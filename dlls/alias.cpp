@@ -332,7 +332,7 @@ void CTriggerChangeAlias::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, US
 
 	if (pTarget && pTarget->IsAlias())
 	{
-		CBaseEntity *pValue;
+		CBaseEntity *pValue = NULL;
 
 		if (FStrEq(STRING(pev->netname), "*locus"))
 		{

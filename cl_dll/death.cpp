@@ -167,7 +167,7 @@ int CHudDeathNotice :: MsgFunc_DeathMsg( const char *pszName, int iSize, void *p
 
 	char killedwith[32];
 	strcpy( killedwith, "d_" );
-	strncat( killedwith, READ_STRING(), 31 );
+	strncat( killedwith, READ_STRING(), sizeof(killedwith) - strlen(killedwith) - 1 );
 
 	gHUD.m_Spectator.DeathMessage(victim);
 
@@ -277,7 +277,7 @@ int CHudDeathNotice :: MsgFunc_DeathMsg( const char *pszName, int iSize, void *p
 			ConsolePrint( rgDeathNoticeList[i].szVictim );
 		}
 
-		if ( killedwith && *killedwith && (*killedwith > 13 ) && strcmp( killedwith, "d_world" ) && !rgDeathNoticeList[i].iTeamKill )
+		if ( *killedwith && (*killedwith > 13 ) && strcmp( killedwith, "d_world" ) && !rgDeathNoticeList[i].iTeamKill )
 		{
 			ConsolePrint( " with " );
 

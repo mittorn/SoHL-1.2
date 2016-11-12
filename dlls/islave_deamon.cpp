@@ -678,7 +678,7 @@ Schedule_t *CISlave :: GetSchedule( void )
 	switch (m_MonsterState)
 	{
 	case MONSTERSTATE_COMBAT:
-// dead enemy
+		// dead enemy
 		if ( HasConditions( bits_COND_ENEMY_DEAD ) )
 		{
 			// call base class, all code to handle dead enemies is centralized there.
@@ -701,6 +701,8 @@ Schedule_t *CISlave :: GetSchedule( void )
 				}
 			}
 		}
+		break;
+	default:
 		break;
 	}
 	return CSquadMonster::GetSchedule( );

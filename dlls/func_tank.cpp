@@ -1059,7 +1059,7 @@ void CFuncTank::TrackTarget( void )
 	UTIL_SetAvelocity(this, setAVel);
 
 	// notify the TankSequence if we're (pretty close to) facing the target
-	if (m_pSequence && abs(distY) < 0.1 && abs(distX) < 0.1)
+	if( m_pSequence && fabs( distY ) < 0.1 && fabs( distX ) < 0.1 )
 		m_pSequence->FacingNotify();
 
 	// firing in tanksequences:
@@ -1599,7 +1599,7 @@ void CFuncTankControls :: Use( CBaseEntity *pActivator, CBaseEntity *pCaller, US
 			return;
 
 		//LRC- Now uses FindEntityByTargetname, so that aliases work.
-		while (tryTank = UTIL_FindEntityByTargetname(tryTank, STRING(pev->target)))
+		while( ( tryTank = UTIL_FindEntityByTargetname( tryTank, STRING( pev->target ) ) ) )
 		{
 			if (!strncmp( STRING(tryTank->pev->classname), "func_tank", 9 ))
 			{
@@ -1643,7 +1643,7 @@ void CFuncTankControls :: Use( CBaseEntity *pActivator, CBaseEntity *pCaller, US
 		//ALERT(at_console, "TANK controls deactivated\n");
 
 		//LRC- Now uses FindEntityByTargetname, so that aliases work.
-		while (tryTank = UTIL_FindEntityByTargetname(tryTank, STRING(pev->target)))
+		while( ( tryTank = UTIL_FindEntityByTargetname( tryTank, STRING( pev->target ) ) ) )
 		{
 			if (FClassnameIs(tryTank->pev, "func_tank"))
 			{

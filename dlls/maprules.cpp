@@ -747,13 +747,17 @@ void CGameCounter::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE 
 	case USE_TOGGLE:
 		CountUp();
 		break;
-	
 	case USE_OFF:
 		CountDown();
 		break;
-
 	case USE_SET:
 		SetCountValue( (int)value );
+		break;
+	case USE_KILL:
+	case USE_SAME:
+	case USE_NOT:
+		break;
+	default:
 		break;
 	}
 	

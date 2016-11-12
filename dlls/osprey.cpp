@@ -449,7 +449,7 @@ void COsprey::Flight( )
 
 	// float flSpeed = DotProduct( gpGlobals->v_forward, pev->velocity );
 
-	float m_flIdealtilt = (160 - flSpeed) / 10.0;
+	m_flIdealtilt = (160 - flSpeed) / 10.0;
 
 	// ALERT( at_console, "%f %f\n", flSpeed, flIdealtilt );
 	if (m_flRotortilt < m_flIdealtilt)

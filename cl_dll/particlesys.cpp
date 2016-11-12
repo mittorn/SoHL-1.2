@@ -675,7 +675,7 @@ void ParticleSystem::DrawSystem()//vec3_t &right, vec3_t &up)
 
 	if ( DotProduct ( vecDir, forward ) < 0 )
 		return false;
-/*
+
 	float dot = fabs( DotProduct ( vecDir, right ) ) + fabs( DotProduct ( vecDir, up ) ) * 0.5;
 	// tweak for distance
 	dot *= 1.0 + 0.2 * ( distance / 8192 );
@@ -685,9 +685,9 @@ void ParticleSystem::DrawSystem()//vec3_t &right, vec3_t &up)
 	
 	if ( dot > arc )
 		return false;
-*/
-//	return true;
-//}
+
+	return true;
+}*/
 
 bool ParticleSystem::UpdateParticle(particle *part, float frametime)
 {

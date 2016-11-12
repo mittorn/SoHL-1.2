@@ -511,7 +511,7 @@ void CBaseToggle::KeyValue( KeyValueData *pkvd )
 //	LinearMove(vecInput, flSpeed);
 //}
 
-/*
+
 =============
 LinearMove
 
